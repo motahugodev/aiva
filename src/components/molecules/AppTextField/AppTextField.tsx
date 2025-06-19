@@ -7,19 +7,24 @@ type TextFieldProps = InputProps & {
   icon?: React.ElementType;
 };
 
-const TextField = React.forwardRef<typeof Input.Field, TextFieldProps>(
+const TextField = React.forwardRef<React.ElementRef<typeof Input>, TextFieldProps>(
   ({ label, error, icon: Icon, ...props }, ref) => {
-    const id = React.useId();
+    const inputId = React.useId();
 
     return (
-      <Typography as='label' htmlFor={id} color='default' className='mb-6 block w-full space-y-1.5'>
+      <Typography
+        as='label'
+        htmlFor={inputId}
+        color='default'
+        className='mb-6 block w-full space-y-1.5'
+      >
         <span className='text-sm font-semibold'>{label}</span>
         <Input
           ref={ref}
-          {...props}
-          id={id}
-          isError={Boolean(error)}
+          id={inputId}
           color={error ? 'error' : 'primary'}
+          isError={Boolean(error)}
+          {...props}
         >
           {Icon && (
             <Input.Icon>

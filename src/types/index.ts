@@ -20,10 +20,10 @@ export interface Product {
 }
 
 export interface Form {
-  title: string | null;
-  description: string | null;
-  price: string | number | null;
-  categoryId: string | null;
+  title: string;
+  description: string;
+  price: number;
+  categoryId: number;
   images?: string[];
 }
 
@@ -32,14 +32,13 @@ export interface Auth {
   refresh_token: string | undefined;
 }
 
-
 export interface User {
   id: number;
   email: string;
   password: string;
   name: string;
-  role: "customer" | "admin" | "seller"; // ou apenas "customer" se for fixo
+  role: 'customer' | 'admin' | 'seller'; // ou apenas "customer" se for fixo
   avatar: string;
   creationAt: string; // ISO date string
   updatedAt: string;
-};
+}

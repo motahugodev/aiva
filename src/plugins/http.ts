@@ -1,14 +1,6 @@
-import axios, { type AxiosInstance, type AxiosResponse, AxiosError} from 'axios';
-import { getToken } from '@/utils/cookies';
-
-export const redirectToLogin = () => {
-  // Cookies.remove(import.meta.env.VITE_COOKIE_JWT, {
-  //   domain: import.meta.env.VITE_COOKIE_DOMAIN,
-  // });
-  // const locationHref = window.location.href
-  // const loginUrl = import.meta.env.VITE_FAIRFAX_LOGIN
-  // window.location.replace(`${loginUrl}?next=${locationHref}`)
-};
+import axios, { type AxiosInstance, type AxiosResponse, AxiosError } from 'axios';
+import { getToken, getRefreshToken } from '@/utils/cookies';
+import { postRefreshTokenApi } from '@/services/auth';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -18,8 +10,6 @@ const instance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   withCredentials: false,
 });
-
- 
 
 const axiosErrorFactory = (error: AxiosError) => {
   let e;
@@ -43,7 +33,7 @@ const axiosErrorFactory = (error: AxiosError) => {
 
 instance.interceptors.request.use(
   (config) => {
-    const token =  getToken();
+    const token = getToken();
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -55,10 +45,11 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error) => {
+  async (error) => {
     const status = error.response?.status;
-    if (status === 401 || status === 403) {
-      // redirectToLogin()
+    if (status === 401) {
+      if (!getRefreshToken()) return;
+      await postRefreshTokenApi(getRefreshToken());
     }
     return Promise.reject(error);
   },
@@ -94,5 +85,3 @@ export const httpDelete = <T>({ url, params = {} }): Promise<T> =>
     .delete<T>(url, { params })
     .then((res) => res.data)
     .catch((e) => Promise.reject(axiosErrorFactory(e)));
-
- 

@@ -2,6 +2,8 @@ import { Card, Typography, Button } from '@material-tailwind/react';
 import type { Product } from '@/types';
 import { Link } from 'react-router';
 import { currencyPrice } from '@/utils';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 interface Props {
   product: Product;
 }
@@ -9,7 +11,16 @@ interface Props {
 export default function EcommerceCard({ product }: Props) {
   return (
     <Card className='max-w-96'>
-      <Card.Header as='img' src={product.images[0]} className='h-96 object-cover' />
+      <Card.Header
+        as={LazyLoadImage}
+        alt={product.title}
+        effect='blur'
+        className='h-96 object-cover'
+        wrapperProps={{
+          style: { transitionDelay: '1s' },
+        }}
+        src={product.images[0]}
+      />
       <Card.Body>
         <div className='mb-2 flex items-center justify-between'>
           <Typography type='h6'>{product.title}</Typography>

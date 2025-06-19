@@ -12,6 +12,7 @@ export default function uploadImage({ EmitImage, images = [] }: Props) {
 
   const onChange = (imageList: ImageListType) => {
     const urls: string[] = imageList.map((image) => URL.createObjectURL(image.file));
+    console.log('🚀 ~ onChange ~ urls:', urls);
 
     EmitImage(urls);
   };

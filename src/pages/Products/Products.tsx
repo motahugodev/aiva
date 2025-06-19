@@ -1,5 +1,5 @@
 import useSWR, { type Fetcher } from 'swr';
-import AppCards from '@/components/organisms/AppCards/AppCards';
+import { AppCards } from '@/components/organisms';
 import { getProductsApi } from '@/services/product';
 import type { Product } from '@/types';
 

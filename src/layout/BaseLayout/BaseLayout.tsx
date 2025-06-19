@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router';
-import AppHeader from '@/components/organisms/AppHeader/AppHeader';
 import { getCategoriesApi } from '@/services/categories';
 import { getProfile } from '@/services/auth';
 import useSWR from 'swr';
+import AppHeader from '@/components/organisms/AppHeader/AppHeader';
 
 export default function BaseLayout() {
 

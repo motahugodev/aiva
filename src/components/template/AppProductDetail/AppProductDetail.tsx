@@ -1,5 +1,4 @@
-import AppDetail from '@/components/molecules/AppDetail/AppDetail';
-import AppGallery from '@/components/molecules/AppGallery/AppGallery';
+import { AppDetail, AppGallery } from '@/components/molecules';
 import type { Product } from '@/types';
 
 interface Props {

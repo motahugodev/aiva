@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 import { currencyPrice } from '@/utils';
 import type { Product } from '@/types';
+import { format } from 'date-fns';
 
 interface Props {
   EmitDelete: (value: number) => void;
@@ -77,13 +78,17 @@ export default function AppProductList({ EmitDelete, products }: Props) {
                     </div>
                   </td>
                   <td className='p-3'>
-                    <Typography type='small'>{creationAt}</Typography>
+                    <Typography type='small'>
+                      {format(new Date(creationAt), 'dd/MM/yyyy')}
+                    </Typography>
                   </td>
                   <td className='p-3'>
                     <Tooltip>
-                      <Tooltip.Trigger as={IconButton} variant='ghost' color='secondary'>
-                        <EditPencil className='h-4 w-4 text-black dark:text-white' />
-                      </Tooltip.Trigger>
+                      <Link to={`/product/edit/${id}`}>
+                        <Tooltip.Trigger as={IconButton} variant='ghost' color='secondary'>
+                          <EditPencil className='h-4 w-4 text-black dark:text-white' />
+                        </Tooltip.Trigger>
+                      </Link>
                       <Tooltip.Content>
                         Editar Produto
                         <Tooltip.Arrow />
@@ -91,7 +96,7 @@ export default function AppProductList({ EmitDelete, products }: Props) {
                     </Tooltip>
                     <Tooltip>
                       <Tooltip.Trigger
-                        onClick={ () => EmitDelete(id)}
+                        onClick={() => EmitDelete(id)}
                         as={IconButton}
                         variant='ghost'
                         color='danger'

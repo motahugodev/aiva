@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 import { AuthLayout, BaseLayout } from '@/layout';
 import { Products, ProductDetail, Login, Register, Category, ProductList } from '@/pages';
+import PrivateRoute from './protected';
 
 export const router = createBrowserRouter([
   {
@@ -16,20 +17,14 @@ export const router = createBrowserRouter([
         children: [{ path: 'login', Component: Login }],
       },
       {
+        Component: PrivateRoute,
         path: 'product',
         children: [
           { path: 'register', Component: Register },
+          { path: 'edit/:id', Component: Register },
           { path: 'list', Component: ProductList },
         ],
       },
-      //   {
-      //     path: "concerts",
-      //     children: [
-      //       { index: true, Component: ConcertsHome },
-      //       { path: ":city", Component: ConcertsCity },
-      //       { path: "trending", Component: ConcertsTrending },
-      //     ],
-      //   },
     ],
   },
 ]);

@@ -19,6 +19,15 @@ export const getProductsSlugApi = async (slug?: string): Promise<Product> => {
   }
 };
 
+export const getProductsEdit = async (id?: string): Promise<Product> => {
+  try {
+    const data = await httpGet({ url: '/products/' + id });
+    return data as Promise<Product>;
+  } catch {
+    throw new Error('Err');
+  }
+};
+
 export const postProductApi = async (body: Form): Promise<Form> => {
   try {
     const data = await httpPost({ url: '/products/', body });
@@ -36,9 +45,9 @@ export const deleteProductApi = async (id: number): Promise<Form> => {
     throw new Error('Err');
   }
 };
-export const putProductApi = async (id: number): Promise<Form> => {
+export const putProductApi = async (id: string, body: Form): Promise<Form> => {
   try {
-    const data = await httpPut({ url: '/products/' + id });
+    const data = await httpPut({ url: '/products/' + id, body });
     return data as Promise<Form>;
   } catch {
     throw new Error('Err');
@@ -46,8 +55,10 @@ export const putProductApi = async (id: number): Promise<Form> => {
 };
 
 export const postUpload = async (image): Promise<Form> => {
+  const formData = new FormData();
+  formData.append('image', image);
   try {
-    const data = await httpPost({ url: '/files/upload', body: image });
+    const data = await httpPost({ url: '/files/upload', body: formData });
     return data as Promise<Form>;
   } catch {
     throw new Error('Err');
